@@ -50,16 +50,17 @@ describe("Given I am connected as an employee", () => {
         document,
         onNavigate,
         store: null, 
-        bills: bills,
+        bills: [],
         localStorage: window.localStorage
       })
       // Simulate the clic on "Nouvelle Facture" button
       document.body.innerHTML = `<div data-testid="btn-new-bill"></div>`
       const newBillBtn = screen.getByTestId('btn-new-bill')
       newBillBtn.addEventListener('click', bills.handleClickNewBill)
+      const onNavigateSpy = jest.spyOn(bills, "onNavigate")
       fireEvent.click(newBillBtn)
       // Check if onNavigate has been called with the path to new bill
-      expect(onNavigate).toHaveBeenCalledWith(ROUTES_PATH.NewBill);
+      expect(onNavigateSpy).toHaveBeenCalledWith(ROUTES_PATH.NewBill);
     });
   })
   describe("When I click on the eye icon of a bill", () => {
